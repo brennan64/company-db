@@ -4,7 +4,16 @@ module.exports = {
       type: "list",
       name: "menu",
       message: "What Would You Like to do?",
-      choices: opt,
+      choices: [
+        "View All Employees",
+        "Add Employee",
+        "Update Employee Role",
+        "View All Roles",
+        "Add Role",
+        "View All Departments",
+        "Add Department",
+        // "Quit",
+      ],
     },
   ],
 
