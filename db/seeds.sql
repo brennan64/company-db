@@ -14,11 +14,11 @@ INSERT INTO emp_role(title, salary, dept_id)
            ('warewash installer', '70000', 4); 
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-    VALUES ('chip', 'chipperson', 2, null),
+    VALUES ('chip', 'chipperson', 2, 1),
            ('Jesse', 'James', 1, 1),
-           ('Ted', 'Sheckler', 4, null),
+           ('Ted', 'Sheckler', 4, 2),
            ('fez', 'Whatley', 3, 3),
-           ('Jimmy', 'Dean', 4, null), 
+           ('Jimmy', 'Dean', 4, 1), 
            ('Tim', 'Allen', 3, 5),
-           ('Monkey', 'Luffy', 2, null),
+           ('Monkey', 'Luffy', 2, 5,
            ('Patrick', 'Roy', 1, 7);

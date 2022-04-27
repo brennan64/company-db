@@ -1,30 +1,25 @@
-function viewEmployees() {
-  console.log("--- Browsing All Employees ---");
-  db.findAllEmployees()
-    .then(([employeeData]) => {
-      let employees = employeeData;
-      console.table(employees);
-    })
-    .then(() => menu());
+const connection = require("../index");
+class DB {
+  constructor(connection) {
+    this.connection = connection;
+  }
+  findAllEmployees() {
+    return this.connection.promise().query(`SELECT employee.id,
+        employee.first_name,
+        employee.last_name,
+        emp_role.title,
+        department.dept_name as department,
+        emp_role.salary AS "Salary",
+        CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+          FROM employee
+      LEFT JOIN emp_role ON employee.role_id = emp_role.id
+    LEFT JOIN department ON emp_role.dept_id = department.id
+    LEFT JOIN employee manager
+    ON manager.id = employee.manager_id
+    ORDER BY employee.id;`);
+  }
 }
 
-function addEmployees() {
-  console.log("add emps");
-}
+module.exports = new DB(connection);
 
-function updateRole() {
-  console.log("change roles");
-}
-
-function viewRoles() {
-  console.log("seeroles");
-}
-function createRole() {
-  console.log("make a new role");
-}
-function viewDepartments() {
-  console.log("see departments");
-}
-function addDepartments() {
-  console.log("add deps");
-}
+// module.exports;
