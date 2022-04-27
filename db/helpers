@@ -1,0 +1,30 @@
+function viewEmployees() {
+  console.log("--- Browsing All Employees ---");
+  db.findAllEmployees()
+    .then(([employeeData]) => {
+      let employees = employeeData;
+      console.table(employees);
+    })
+    .then(() => menu());
+}
+
+function addEmployees() {
+  console.log("add emps");
+}
+
+function updateRole() {
+  console.log("change roles");
+}
+
+function viewRoles() {
+  console.log("seeroles");
+}
+function createRole() {
+  console.log("make a new role");
+}
+function viewDepartments() {
+  console.log("see departments");
+}
+function addDepartments() {
+  console.log("add deps");
+}

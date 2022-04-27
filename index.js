@@ -12,6 +12,29 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-  err ? console.log(err) : console.log(connected);
+  err ? console.log(err) : startApp();
 });
+
+function startApp() {
+  inquirer
+    .prompt(prompts.menu)
+    .then((ans) =>
+      ans.menu == "View All Employees"
+        ? viewEmployees()
+        : ans.menu == "Add Employee"
+        ? addEmployees()
+        : ans.menu == "Update Employee Role"
+        ? updateRole()
+        : ans.menu == "View All Roles"
+        ? viewRoles()
+        : ans.menu == "Add Role"
+        ? createRole()
+        : ans.menu == "View All Departments"
+        ? viewDepartments()
+        : ans.menu == "Add Department"
+        ? addDepartments()
+        : console.log("boo")
+    );
+}
+
 module.exports = connection;

@@ -12,7 +12,7 @@ module.exports = {
         "Add Role",
         "View All Departments",
         "Add Department",
-        "Quit",
+        // "Quit",
       ],
     },
   ],
