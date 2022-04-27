@@ -1,12 +1,3 @@
-const opt = [
-  "View All Departments",
-  "View All Roles",
-  "View All Employees",
-  "Add a Department",
-  "Add a Role",
-  "Add Employee",
-  "Update Employee Role",
-];
 module.exports = {
   menu: [
     {
