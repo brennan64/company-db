@@ -57,7 +57,12 @@ module.exports = {
     {
       type: "input",
       name: "reportsTo",
-      message: "Enter Name for New Employee's Manager",
+      message: "Enter id for New Employee's Manager",
+    },
+    {
+      type: "input",
+      name: "roleID",
+      message: "Enter id for New Employee's Role",
     },
   ],
 };
