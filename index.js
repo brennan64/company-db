@@ -11,51 +11,34 @@ const db = mysql.createConnection({
   database: process.env.MYSQL_DB_NAME,
 });
 
-// db.connect((err) => {
-//   err ? console.log(err) :
-startApp();
-// });
+db.connect((err) => {
+  err ? console.log(err) : startApp();
+});
 
 function startApp() {
-  inquirer
-    .prompt(prompts.menu)
-    .then((ans) =>
-      ans.menu == "View All Employees"
-        ? viewEmployees()
-        : ans.menu == "Add Employee"
-        ? addEmployees()
-        : ans.menu == "Update Employee Role"
-        ? updateRole()
-        : ans.menu == "View All Roles"
-        ? viewRoles()
-        : ans.menu == "Add Role"
-        ? createRole()
-        : ans.menu == "View All Departments"
-        ? viewDepartments()
-        : ans.menu == "Add Department"
-        ? addDepartments()
-        : console.log("boo")
-    );
+  inquirer.prompt(prompts.menu).then(function (ans) {
+    ans.menu == "View All Employees"
+      ? viewEmployees()
+      : ans.menu == "Add Employee"
+      ? addEmployees()
+      : ans.menu == "Update Employee Role"
+      ? updateRole()
+      : ans.menu == "View All Roles"
+      ? viewRoles()
+      : ans.menu == "Add Role"
+      ? createRole()
+      : ans.menu == "View All Departments"
+      ? viewDepartments()
+      : ans.menu == "Add Department"
+      ? addDepartments()
+      : process.exit();
+  });
 }
 
 function viewEmployees() {
-  console.clear();
-
   console.log("__________Browsing All Employees_______");
 
-  let sqlQuery = `SELECT employee.id AS "ID",
-  employee.first_name AS "First Name",
-  employee.last_name AS "Last Name",
-  emp_role.title AS "Title",
-  department.dept_name AS "Department",
-  emp_role.salary AS "Salary",
-  CONCAT(manager.first_name, ' ', manager.last_name) AS manager
-FROM employee
-JOIN emp_role ON employee.role_id = emp_role.id
-JOIN department ON emp_role.dept_id = department.id
-LEFT JOIN employee manager
-ON manager.id = employee.manager_id
-ORDER BY employee.id;`;
+  const sqlQuery = `SELECT * FROM employees;`;
 
   db.query(sqlQuery, (err, results) => {
     err ? console.log(err) : console.table(results);
@@ -64,7 +47,18 @@ ORDER BY employee.id;`;
 }
 
 function addEmployees() {
-  console.log("add emps");
+  inquirer.prompt(prompts.newEmp).then((ans) => {
+    let first = ans.newEmpFirst.toString();
+    let last = ans.newEmpLast.toString();
+    let manID = ans.reportsTo.toString();
+    let roleID = ans.roleID.toString();
+    let sqlQuery = `INSERT INTO employee_db.employees (first_name, last_name, manager_id, role_id)
+VALUES("${first}", "${last}", "${manID}", "${roleID}")`;
+
+    db.query(sqlQuery, (err, results) => {
+      err ? console.log(err) : startApp();
+    });
+  });
 }
 
 function updateRole() {
@@ -72,7 +66,13 @@ function updateRole() {
 }
 
 function viewRoles() {
-  console.log("seeroles");
+  let sqlQuery = `SELECT department.ID, role.title, role.salary
+  FROM Orders
+  INNER JOIN department ON department.id=role.dept_ID;`;
+  db.query(sqlQuery, (err, results) => {
+    err ? console.log(err) : console.log("success");
+    startApp();
+  });
 }
 function createRole() {
   console.log("make a new role");
@@ -88,4 +88,4 @@ function addDepartments() {
   console.log("add deps");
 }
 
-module.exports = db;
+// module.exports = db;
