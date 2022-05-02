@@ -4,6 +4,6 @@ SELECT role.id AS "ID",
     role.salary AS "Salary",
         department.dept_name AS dept
                 
-    FROM role
+    FROM job_role
     JOIN department ON role.dept_id = department.id;
  
