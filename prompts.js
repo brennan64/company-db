@@ -38,8 +38,8 @@ module.exports = {
     },
     {
       type: "input",
-      name: "departmnet",
-      message: "Enter Department for New Role",
+      name: "department",
+      message: "Enter Department ID for New Role",
     },
   ],
 
@@ -57,12 +57,25 @@ module.exports = {
     {
       type: "input",
       name: "reportsTo",
-      message: "Enter id for New Employee's Manager",
+      message: "Enter ID for New Employee's Manager",
     },
     {
       type: "input",
       name: "roleID",
-      message: "Enter id for New Employee's Role",
+      message: "Enter ID for New Employee's Role",
+    },
+  ],
+
+  updateRole: [
+    {
+      type: "input",
+      name: "emp",
+      message: "Enter ID for Employee to Update Role",
+    },
+    {
+      type: "input",
+      name: "newRole",
+      message: "Enter ID for Employees New Role",
     },
   ],
 };

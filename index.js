@@ -62,30 +62,54 @@ VALUES("${first}", "${last}", "${manID}", "${roleID}")`;
 }
 
 function updateRole() {
-  console.log("change roles");
+  inquirer.prompt(prompts.updateRole).then((ans) => {
+    let emp = ans.emp.toString();
+    let newRole = ans.newRole.toString();
+    let sqlQuery = `UPDATE employees
+    SET  role_id = "${newRole}"
+    WHERE id = "${emp}";`;
+    db.query(sqlQuery, (err, results) => {
+      err ? console.log(err) : console.log("sucess");
+      startApp();
+    });
+  });
 }
 
 function viewRoles() {
-  let sqlQuery = `SELECT department.ID, role.title, role.salary
-  FROM Orders
-  INNER JOIN department ON department.id=role.dept_ID;`;
+  let sqlQuery = `SELECT * FROM job_role;`;
   db.query(sqlQuery, (err, results) => {
-    err ? console.log(err) : console.log("success");
+    err ? console.log(err) : console.table(results);
     startApp();
   });
 }
 function createRole() {
-  console.log("make a new role");
+  inquirer.prompt(prompts.newRole).then((ans) => {
+    let newRoleName = ans.newRoleName.toString();
+    let salary = ans.salary.toString();
+    let department = ans.department.toString();
+    let sqlQuery = `INSERT INTO employee_db.job_role (title, salary, dept_id)
+    VALUES("${newRoleName}", "${salary}", "${department}")`;
+
+    db.query(sqlQuery, function (err, results) {
+      err ? console.log(err) : startApp();
+    });
+  });
 }
 function viewDepartments() {
-  console.log("_________loading departments___________");
   db.query("SELECT * FROM department", function (err, results) {
-    console.table(results);
+    err ? console.log(err) : console.table(results);
     startApp();
   });
 }
 function addDepartments() {
-  console.log("add deps");
-}
+  inquirer.prompt(prompts.newDep).then((ans) => {
+    let newDepartment = ans.depName.toString();
 
-// module.exports = db;
+    let sqlQuery = `INSERT INTO employee_db.department (dept_name)
+  VALUES("${newDepartment}")`;
+    db.query(sqlQuery, function (err, results) {
+      err ? console.log(err) : console.log();
+      startApp();
+    });
+  });
+}
